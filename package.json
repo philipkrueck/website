@@ -1,5 +1,8 @@
 {
-  "private": true,
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Philip's Website",
+  "author": "Philip Krück",
   "scripts": {
     "dev": "next",
     "build": "next build",
