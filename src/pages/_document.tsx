@@ -7,11 +7,7 @@ export default class Document extends NextDocument {
       <Html>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link
-            rel="icon"
-            href="https://avatars.githubusercontent.com/u/46320394?v=4"
-            type="image/png"
-          ></link>
+          <link rel="icon" href="profile.png" type="image/png"></link>
           <title>Philip Krück</title>
         </Head>
         <body>

@@ -11,24 +11,25 @@ import {
   Container,
   Button,
 } from "@chakra-ui/react";
-import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import { IoLogoGithub, IoLogoLinkedin, IoMail } from "react-icons/io5";
 import { RoundedBox } from "../components/RoundedBox";
 import { IconType } from "react-icons/lib";
 
 const Index = () => (
-  <Container mt={59}>
-    <RoundedBox>
-      <HStack align={"top"}>
-        <AboutSection />
-        <Spacer width={10} />
-        <ProfilePic />
-      </HStack>
-    </RoundedBox>
+  <Container mt={24}>
+    <AboutBox />
     <SocialSection />
-    <DarkModeSwitch />
-    <Footer />
   </Container>
+);
+
+const AboutBox = () => (
+  <RoundedBox>
+    <HStack align={"top"}>
+      <AboutSection />
+      <Spacer width={10} />
+      <ProfilePic />
+    </HStack>
+  </RoundedBox>
 );
 
 const AboutSection = () => (
@@ -51,7 +52,8 @@ const ProfilePic = () => (
   <Avatar
     size="2xl"
     name="Philip Krück"
-    src="https://avatars.githubusercontent.com/u/46320394?s=400&u=911a59eb531ffae914a157bb99ba0a15c12bc5b7&v=4"
+    src="profile.png"
+    ignoreFallback={true}
   />
 );
 
@@ -79,10 +81,6 @@ const SocialSection = () => (
     </List>
   </Container>
 );
-
-const Footer = () => (
-  <Text pt={20 } fontSize={"xs"} textAlign={"center"}>Thanks for visiting. © 2023. Stay curious, keep coding. 🚀</Text>
-)
 
 interface SocialItemProps {
   url: string;
