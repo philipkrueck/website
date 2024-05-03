@@ -6,8 +6,6 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import {
-  IoLogoVk,
-  IoPersonSharp,
   IoNewspaperOutline,
   IoCodeSlashOutline,
   IoPersonOutline,
@@ -60,14 +58,15 @@ const MenuButton = ({
   icon: Icon,
   name,
   currentPathName,
-}: MenuButtonProps) => (
-  <ChakraLink as={NextLink} href={href}>
-    <Button
-      variant="ghost"
-      leftIcon={<Icon />}
-      isActive={currentPathName === href}
-    >
-      {name}
-    </Button>
-  </ChakraLink>
-);
+}: MenuButtonProps) => {
+  const isActive =
+    currentPathName === href ||
+    (currentPathName.includes("/posts/") && href === "/posts");
+  return (
+    <ChakraLink as={NextLink} href={href}>
+      <Button variant="ghost" leftIcon={<Icon />} isActive={isActive}>
+        {name}
+      </Button>
+    </ChakraLink>
+  );
+};

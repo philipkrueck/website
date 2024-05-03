@@ -8,31 +8,31 @@ import {
   Avatar,
   VStack,
   HStack,
-  Container,
   Button,
+  Box,
 } from "@chakra-ui/react";
 import { IoLogoGithub, IoLogoLinkedin, IoMail } from "react-icons/io5";
 import { RoundedBox } from "../components/RoundedBox";
 import { IconType } from "react-icons/lib";
 
 const Index = () => (
-  <Container mt={24}>
+  <Box>
     <AboutBox />
     <SocialSection />
-  </Container>
+  </Box>
 );
 
 const AboutBox = () => (
   <RoundedBox>
     <HStack align={"top"}>
-      <AboutSection />
+      <AboutTextSection />
       <Spacer width={10} />
       <ProfilePic />
     </HStack>
   </RoundedBox>
 );
 
-const AboutSection = () => (
+const AboutTextSection = () => (
   <VStack align={"left"}>
     <Heading variant="page-title">Philip Krück</Heading>
     <Text fontSize={"sm"}>
@@ -58,7 +58,7 @@ const ProfilePic = () => (
 );
 
 const SocialSection = () => (
-  <Container p={0}>
+  <Box p={0}>
     <Heading size="md" mt={6}>
       Socials
     </Heading>
@@ -79,7 +79,7 @@ const SocialSection = () => (
         leftIcon={IoMail}
       />
     </List>
-  </Container>
+  </Box>
 );
 
 interface SocialItemProps {

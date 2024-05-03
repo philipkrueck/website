@@ -1,8 +1,7 @@
-import { ChakraProvider, Menu } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import theme from "../theme";
 import { AppProps } from "next/app";
-import { NavBarMenu } from "../components/NavBarMenu";
 import { Layout } from "../components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,4 +15,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
-

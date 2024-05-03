@@ -1,11 +1,13 @@
-import { Box, Flex, Spacer } from "@chakra-ui/react";
+import { Container, Flex, Spacer } from "@chakra-ui/react";
 import { Footer } from "./Footer";
 import { NavBarMenu } from "./NavBarMenu";
 
 export const Layout = ({ children }) => (
   <Flex flexDirection="column" minHeight="100vh">
     <NavBarMenu />
-    <Box>{children}</Box>
+    <Container maxWidth={750} mt={24}>
+      {children}
+    </Container>
     <Spacer />
     <Footer />
   </Flex>

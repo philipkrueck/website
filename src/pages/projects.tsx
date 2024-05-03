@@ -1,9 +1,9 @@
-import { Text, Container } from "@chakra-ui/react";
+import { Text, Box } from "@chakra-ui/react";
 
 const Projects = () => (
-  <Container mt={24}>
+  <Box>
     <Text>Coming Soon...</Text>
-  </Container>
+  </Box>
 );
 
 export default Projects;
