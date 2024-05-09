@@ -11,7 +11,7 @@ import {
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import NextLink from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
-import { allPosts, Post } from "contentlayer/generated";
+import { allPosts, Post } from ".contentlayer/generated";
 
 export const getStaticProps: GetStaticProps<{
   posts: Post[];

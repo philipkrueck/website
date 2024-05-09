@@ -1,0 +1,302 @@
+---
+title: "Course Review: Advanced Operating Systems"
+description: "OMSCS 6601 review at Georgia Techs Online Master of Computer Science"
+date: 2024-05-09
+---
+
+> "The operating system is the soul of a computer." - Unknown
+
+## What the Course Is About
+
+This course is the natural evolution of [CS6200](https://omscs.gatech.edu/cs-6200-introduction-operating-systems) aka GIOS.
+Many students (including myself) took GIOS prior to AOS.
+GIOS tackles the core concepts of operating systems like processes, threads, memory management, CPU scheduling & file systems.
+AOS gives a brief refresher on these topics at the start of the course, but then dives into some more advanced topics including:
+- Dynamic Resource Allocation in Virtualized Environments
+- [Barrier Synchronization](https://en.wikipedia.org/wiki/Barrier_(computer_science)) Algorithms in Parallel Systems
+- Distributed Memory & File Systems
+- Parallel Data Processing ([MapReduce](https://en.wikipedia.org/wiki/MapReduce))
+- [Content Delivery Networks](https://www.cloudflare.com/learning/cdn/what-is-a-cdn/)
+- Failure & Recovery in Distributed Systems
+- Security
+
+## Personal Note
+
+I have taken this course in the Spring semster of 2024 along with [AI](https://omscs.gatech.edu/cs-6601-artificial-intelligence).
+Prior to this course I have taken [GIOS](https://omscs.gatech.edu/cs-6200-introduction-operating-systems), [DBS](https://omscs.gatech.edu/cs-6400-database-systems-concepts-and-design), [CN](https://omscs.gatech.edu/cs-6250-computer-networks) & [AIES](https://omscs.gatech.edu/cs-6603-ai-ethics-and-society).
+
+## Graded Deliverables
+
+Here's the **grading scheme**:
+- **Prelab**: 2%
+- **Homework**: 3%
+- **Projects**: 48%
+  - *Virtual Machine Scheduling*: 12%
+  - *Barrier Synchronization*: 12%
+  - *Distributed gRPC Service*: 12%
+  - *MapReduce*: 12%
+- **Tests**: 42%
+  - *Test 1*: 16%
+  - *Test 2*: 14%
+  - *Test 3*: 12%
+- **Paper Summaries**: 2%
+- **Class Participation**: 3%
+
+
+### Pre-Lab
+
+This pre-lab acts as a readiness test for the upcoming projects.
+The objective is to find a handful of bugs in a multi-threaded C program.
+The program makes use of the [`pthreads`](https://man7.org/linux/man-pages/man7/pthreads.7.html) library 
+as well as mutexes to implement a simple producer-consumer queue.
+If you've worked with `pthreads` and mutexes before, the prelab will be an easy refresher.
+
+Time spent: ~3 hours
+
+### Homework
+
+The homework asks a bunch of free-form response questions on core OS concepts including 
+virtual memory, paging, segmentation, I/O management, process context switching and the OSI model.
+If you've taken GIOS or a similar OS course, this homework will be a breeze.
+
+Time spent: ~2.5 hours
+
+### Projects
+
+The projects in this course are hard, rewarding, fun, well-designed and for me by far the best part of this course.
+If you liked the GIOS projects, these are on-par or even better.
+For all projects you're provided with starter code and a solid set of instructions.
+AFAIK, the projects aren't open-sourced anywhere.
+
+#### Project 1: Virtual Machine Scheduling
+
+In this project you implement a virtual CPU scheduler and memory coordinator to dynamically manage
+resources for virtual machines.
+[KVM](https://linux-kvm.org/page/Main_Page) is used as a hypervisor on top of an Ubuntu Linux environment to run guest VMs.
+The implementation uses the [`libvirt`](https://libvirt.org/) library to interact with the hypervisor.
+
+The goal of the scheduler is to pin VMs to physical CPUs (pCPUs) such that the
+resulting standard deviation of pCPU usages is less than some threshold.
+In other words, the scheduler balances the load of the VMs equally across the pCPUs.
+The task is an instance of the classic [bin packing problem](https://en.wikipedia.org/wiki/Bin_packing_problem).
+I opted for a variation of [first fit decreasing algorithm](https://en.wikipedia.org/wiki/First-fit-decreasing_bin_packing) where the VMs 
+represent items and the pCPUs represent bins.
+
+For the memory coordinator implementation you're tasked to implement a [baloon driver](https://en.wikipedia.org/wiki/Memory_ballooning) to 
+dynamically adjust the memory allocation of each VM.
+My implementation calculates the memory change between iterations as well as remaining free memory
+to decide whether to increase or decrease memory for each VM. I found the specific decision boundaries
+through trial and error to arrive at a solution which is generalizable across different
+VM/CPU configurations and memory pressure scenarios.
+
+Overall, I found this project challenging, but very doable.
+
+Time spent: ~20 hour
+
+#### Project 2: Barrier Algorithms
+
+The goal of this assignment is to implement multiple [barrier algorithms](https://en.wikipedia.org/wiki/Barrier_(computer_science)) 
+that synchronize between threads and machines. Furthermore, benchmark testing of the implementation is performed
+by scaling the number of cores and threads.
+
+For this project we were able to work in groups of 2, but could also go solo.
+I decided to partner up and am happy I did as we could work independently on separate parts.
+Tbh, I don't think I would have been able to finish the project in time otherwise.
+
+The project itself is directly inspired by the paper ["Algorithms for scalable synchronization on shared-memory multiprocessors"](https://dl.acm.org/doi/10.1145/103727.103729).
+The implementation of the algorithms is done in C using the [OpenMP](https://www.openmp.org/) and [Open MPI](https://www.open-mpi.org/) libraries.
+Basically, OpenMP is used for the thread synchronization and Open MPI for machine synchronization.
+The experiments are run by submitting jobs to Georgia Tech's ["Instructional Cluster Environment"](https://gatech.service-now.com/technology?id=kb_article_view&sysparm_article=KB0042102).
+We wrote some custom Python scripts to automate the test generation and the visualization of the results.
+
+In conclusion, this project was an absolute grind.
+The biggest time sinks included: finding subtle bugs in the barrier implementation,
+dealing with long feedback loops of experiments on the cluster and writing up the report.
+
+Time spent: ~35 hours
+
+#### Project 3: Distributed gRPC service
+
+In this project you build a distributed [async gRPC](https://grpc.io/docs/languages/cpp/async/) service 
+in C++ that uses a [thread pool](https://en.wikipedia.org/wiki/Thread_pool) to make asynchronous requests.
+It mimics an online shop like Amazon which fetches price information for a product from multiple vendors.
+
+Like in project 2, you can team up with a partner. I chose to build this one on my own as I didn't 
+see much potential for splitting work.
+
+The main challenge is setting up async gRPC and implementing a threadpool.
+The remaining parts of coding out the service are pretty straightforward if you're familiar with gRPC.
+
+If you've taken GIOS and/or know gRPC, this project will feel like a breather compared to project 2.
+
+Time spent: ~10 hours
+
+#### Project 4: MapReduce
+
+Project 4 requires you to implement a simplified version of the [MapReduce](https://en.wikipedia.org/wiki/MapReduce) framework.
+
+Once again, partnering up is an option. I collaborated with the same partner from project 2.
+It was easy to split work and we could mostly work independently on separate parts.
+
+For the project itself, you are provided with starter code which scaffolds out the framework.
+One major challenge is to implement the communciation protocol between the master and worker nodes.
+This is facilitated by the gRPC library which should be fresh from project 2.
+MapReduce is technically a distributed system with independent worker nodes, 
+but for this project we only implement a single node version where nodes are simulated by locally running processes.
+
+This was my favorite project of the course.
+I found it rewarding to see the framework come together.
+And, it wasn't a grind like project 2.
+
+Time spent: ~15 hours
+
+### Tests
+
+The testing approach in AOS is unique. The format involves pre-releasing 80% of the actual test questions.
+This provides students with the opportunity to collaboratively answer the questions in a shared document.
+Usually, within one day of the test deadline, students reach a consensus on the correct answers for most questions.
+A few students - probably less than 10 - really shoulder the workload by contributing all the answers.
+The rest of the class, myself included, just piggybacked on their work for test prep.
+
+The final test environment is proctored and closed notes. The remaining 20% of unreleased questions
+I found to be fair and representative of the course material for all 3 tests.
+The test itself is then closed notes, closed internet and proctored.
+
+My study strategy was minimalist—I watched the lectures once and then 
+loaded the widely accepted answers into my memory just before the test.
+
+#### Test 1
+
+Test 1 covers the first 4 lectures of the course:
+
+- Lecture 1: Intro to AOS
+- Lecture 2: OS structures
+- Lecture 3: Virtualization
+- Lecture 4: Parallel Systems
+
+#### Test 2
+
+Test 2 covers the next set of 3 lectures:
+
+- Lecture 5: Distributed Systems
+- Lecture 6: Distributed Objects & Middleware
+- Lecture 7: Distributed Subsystems
+
+#### Test 3
+
+Test 3 covers the remaining 4 lectures:
+
+  - Lecture 8: Failures & Recovery
+  - Lecture 9: Internet Computing
+  - Lecture 10: RT & Multimedia
+  - Lecture 11: Secturity
+
+### Paper Summaries
+
+2% of your grade comes from summarizig 2 research papers.
+I didn't do this part as as I signed up too late when all the nice papers were already taken.
+If you want to do the paper summaries, I would recommend signing up early.
+
+### Class Participation
+
+Class participation is based on activity on Ed Discussions.
+The couse staff don't disclose how they grade this part. 
+I believe it's a function of the number of posts and upvotes.
+I only wrote 2 posts on Ed Discussions and got 100% for this part.
+
+### Grading Curve
+
+The course grading is on a curve. Here's the distribution for Spring 24' (not much of a curve):
+- A: >= 90%
+- B: >= 80%
+- C: >= 64%
+- D: >= 55%
+- F: <  55%
+
+### My Grades
+
+- **Overall Grade**: 91% (A)
+  - *Prelab*: 100%
+  - *Homework*: 88%
+  - *Project 1*: 100%
+  - *Project 2*: 100%
+  - *Project 3*: 92%
+  - *Project 4*: 100%
+  - *Test 1*: 93%
+  - *Test 2*: 81%
+  - *Test 3*: 79%
+  - *Paper Summaries*: 0% (didn't do it)
+  - *Class Participation*: 100%
+  - *CIOS boost*: +0.5% (for entire class)
+
+## The Course Materials
+
+### Lectures
+
+The course curriculum doesn't follow a textbook, 
+choosing instead to present a series of research papers in video format.
+The volume of lecture material is substantial, far more than any other course I've taken.
+
+While some of the content is cool, I found a fair amount of the topics to be a bit antiquated.
+Covering influential older research is great, but I would have liked to see more cutting-edge content.
+
+[Prof. Ramachandran](https://sites.cc.gatech.edu/fac/Kishore.Ramachandran/homepage.html), the course lecturer, 
+is engaging and clearly enthusiastic about the topics.
+However, I found his delivery to be a bit repetitive which made the videos longer than necessary.
+
+The lectures are freely available on [YouTube](https://www.youtube.com/watch?v=GTObrKKbRww&list=PLAwxTw4SYaPkKfusBLVfklgfdcB3BNpwX).
+
+### Research Papers
+
+The sheer amount of research papers assigned is overwhelming. 
+Further, given the complex nature of operating systems, these papers usually aren't light reading.
+My engagement with them was limited to skimming a few rather than reading for depth.
+For sake of learning, I do regret not having more time to delve into the more interesting ones.
+
+However, I think it's entirely possible to get a perfect grade without touching a single paper.
+
+## Personal Opinion on AOS
+
+### My Background going into the course
+
+I had a solid background in operating systems by taking GIOS prior.
+Further, I have a decent C programming background from [reading all of K&R](https://github.com/philipkrueck/the-c-programming-language-2nd-edition-solutions).
+
+However, I suck at C++ and probably know less than 1% of its syntax.
+For the purposes of this course, knowing C and some programming concepts from other languages was good enough
+to get through the projects.
+
+### How Hard Was The Course
+
+I found the projects to be moderately hard, exams relatively low effort and the papers overwhelming.
+Compared to other courses I've taken so far, I would rank AOS as one of the harder courses.
+I would stack rank it as harder than AIES, DBS & CN, but similar in difficulty to GIOS and AI.
+
+### What I Liked
+
+- Projects are great
+- Use of gRPC for projects 3 & 4
+- Learned to implemented algorithms directly from research papers
+
+### What I Disliked
+
+- Outdated lecture videos
+- Not much cutting-edge content
+- Completely unrealistic amount of papers to get through in a single semester
+
+### Should You Take This Class
+
+- *You're looking for an easy course with minimal workload.* Don't take this course.
+- *You liked GIOS and want to implement similar projects?* Go for it!
+
+### How I Would Approach The Course If I Were To Take It Again
+
+- Focus on the projects - they provide a high percentage of the grade & most of the learning
+- Watch the lecture videos for key concepts and high level understanding
+- Grind the 80% of pre-released questions for the tests
+- Find a partner for project 2 and 4
+
+## Other Resources
+
+- [OMSCentral Reviews](https://www.omscentral.com/courses/advanced-operating-systems/reviews)
+- [Official Course Page]()
