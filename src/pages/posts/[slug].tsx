@@ -62,12 +62,20 @@ const SinglePostPage = ({
           h5: (props) => <Heading as="h5" size="xs" my={2} {...props} />,
           h6: (props) => <Heading as="h6" size="xs" my={1} {...props} />,
           p: (props) => <Text my={3} {...props} />,
-          a: (props) => <Link my={3} {...props} />,
+          a: (props) => (
+            <Link
+              my={3}
+              isExternal
+              color="jj.500"
+              fontWeight={550}
+              {...props}
+            />
+          ),
           pre: (props) => <Code my={3} {...props} />,
           inlineCode: (props) => <Code my={3} {...props} />,
-          ul: (props) => <UnorderedList my={3} {...props} />,
-          ol: (props) => <OrderedList my={3} {...props} />,
-          li: (props) => <ListItem my={3} {...props} />,
+          ul: (props) => <UnorderedList my={1} {...props} />,
+          ol: (props) => <OrderedList my={1} {...props} />,
+          li: (props) => <ListItem my={1} {...props} />,
           img: (props) => <Image my={3} {...props} />,
           hr: (props) => <Divider my={3} {...props} />,
           blockquote: (props) => (
