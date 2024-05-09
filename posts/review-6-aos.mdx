@@ -79,12 +79,12 @@ The goal of the scheduler is to pin VMs to physical CPUs (pCPUs) such that the
 resulting standard deviation of pCPU usages is less than some threshold.
 In other words, the scheduler balances the load of the VMs equally across the pCPUs.
 The task is an instance of the classic [bin packing problem](https://en.wikipedia.org/wiki/Bin_packing_problem).
-I opted for a variation of [first fit decreasing algorithm](https://en.wikipedia.org/wiki/First-fit-decreasing_bin_packing) where the VMs 
+I opted for a variation of the [first fit decreasing algorithm](https://en.wikipedia.org/wiki/First-fit-decreasing_bin_packing) where the VMs 
 represent items and the pCPUs represent bins.
 
 For the memory coordinator implementation you're tasked to implement a [baloon driver](https://en.wikipedia.org/wiki/Memory_ballooning) to 
 dynamically adjust the memory allocation of each VM.
-My implementation calculates the memory change between iterations as well as remaining free memory
+My implementation calculates the memory change between iterations and the remaining free memory
 to decide whether to increase or decrease memory for each VM. I found the specific decision boundaries
 through trial and error to arrive at a solution which is generalizable across different
 VM/CPU configurations and memory pressure scenarios.
@@ -95,13 +95,13 @@ Time spent: ~20 hour
 
 #### Project 2: Barrier Algorithms
 
-The goal of this assignment is to implement multiple [barrier algorithms](https://en.wikipedia.org/wiki/Barrier_(computer_science)) 
-that synchronize between threads and machines. Furthermore, benchmark testing of the implementation is performed
+The goal of this project is to implement multiple [barrier algorithms](https://en.wikipedia.org/wiki/Barrier_(computer_science)) 
+that synchronize between threads and machines. Furthermore, benchmark testing of the implementation needs to be performed
 by scaling the number of cores and threads.
 
 For this project we were able to work in groups of 2, but could also go solo.
 I decided to partner up and am happy I did as we could work independently on separate parts.
-Tbh, I don't think I would have been able to finish the project in time otherwise.
+I don't think I would have been able to finish the project in time otherwise.
 
 The project itself is directly inspired by the paper ["Algorithms for scalable synchronization on shared-memory multiprocessors"](https://dl.acm.org/doi/10.1145/103727.103729).
 The implementation of the algorithms is done in C using the [OpenMP](https://www.openmp.org/) and [Open MPI](https://www.open-mpi.org/) libraries.
@@ -124,7 +124,7 @@ It mimics an online shop like Amazon which fetches price information for a produ
 Like in project 2, you can team up with a partner. I chose to build this one on my own as I didn't 
 see much potential for splitting work.
 
-The main challenge is setting up async gRPC and implementing a threadpool.
+The main challenge is setting up async gRPC and implementing a thread pool.
 The remaining parts of coding out the service are pretty straightforward if you're familiar with gRPC.
 
 If you've taken GIOS and/or know gRPC, this project will feel like a breather compared to project 2.
@@ -140,7 +140,7 @@ It was easy to split work and we could mostly work independently on separate par
 
 For the project itself, you are provided with starter code which scaffolds out the framework.
 One major challenge is to implement the communciation protocol between the master and worker nodes.
-This is facilitated by the gRPC library which should be fresh from project 2.
+This is facilitated by the gRPC library which should be fresh from project 3.
 MapReduce is technically a distributed system with independent worker nodes, 
 but for this project we only implement a single node version where nodes are simulated by locally running processes.
 
@@ -194,8 +194,7 @@ Test 3 covers the remaining 4 lectures:
 ### Paper Summaries
 
 2% of your grade comes from summarizig 2 research papers.
-I didn't do this part as as I signed up too late when all the nice papers were already taken.
-If you want to do the paper summaries, I would recommend signing up early.
+I didn't do this part as as I signed up too late when all the dope papers were already taken.
 
 ### Class Participation
 
@@ -225,7 +224,7 @@ The course grading is on a curve. Here's the distribution for Spring 24' (not mu
   - *Test 1*: 93%
   - *Test 2*: 81%
   - *Test 3*: 79%
-  - *Paper Summaries*: 0% (didn't do it)
+  - *Paper Summaries*: 0%
   - *Class Participation*: 100%
   - *CIOS boost*: +0.5% (for entire class)
 
@@ -260,7 +259,7 @@ However, I think it's entirely possible to get a perfect grade without touching 
 ### My Background going into the course
 
 I had a solid background in operating systems by taking GIOS prior.
-Further, I have a decent C programming background from [reading all of K&R](https://github.com/philipkrueck/the-c-programming-language-2nd-edition-solutions).
+Further, I have a decent C programming background from [doing all exercises of the K&R book](https://github.com/philipkrueck/the-c-programming-language-2nd-edition-solutions).
 
 However, I suck at C++ and probably know less than 1% of its syntax.
 For the purposes of this course, knowing C and some programming concepts from other languages was good enough
@@ -274,9 +273,9 @@ I would stack rank it as harder than AIES, DBS & CN, but similar in difficulty t
 
 ### What I Liked
 
-- Projects are great
-- Use of gRPC for projects 3 & 4
-- Learned to implemented algorithms directly from research papers
+- Well-designed projects
+- Using gRPC for projects 3 & 4
+- Learning to implement algorithms directly from research papers
 
 ### What I Disliked
 
@@ -292,7 +291,7 @@ I would stack rank it as harder than AIES, DBS & CN, but similar in difficulty t
 ### How I Would Approach The Course If I Were To Take It Again
 
 - Focus on the projects - they provide a high percentage of the grade & most of the learning
-- Watch the lecture videos for key concepts and high level understanding
+- Watch the lecture videos for key concepts and high level understanding at 2x speed
 - Grind the 80% of pre-released questions for the tests
 - Find a partner for project 2 and 4
 

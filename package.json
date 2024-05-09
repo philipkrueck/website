@@ -5,7 +5,7 @@
   "author": "Philip Krück",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "contentlayer build && next build",
     "start": "next start"
   },
   "dependencies": {
