@@ -1,8 +1,8 @@
 import { allPosts, type Post } from "contentlayer/generated";
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import { format, parseISO } from "date-fns";
+import { TagsList } from "src/components/TagsList";
 import {
-  Badge,
   UnorderedList,
   OrderedList,
   Text,
@@ -47,13 +47,6 @@ export const getStaticProps: GetStaticProps<{
   return { props: { post } };
 };
 
-const colors = ["red", "green", "blue", "purple", "pink", "yellow", "teal"];
-
-const tagColor = (tag: string) => {
-  const index = tag.charCodeAt(0) % colors.length;
-  return colors[index];
-};
-
 const SinglePostPage = ({
   post,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -65,15 +58,16 @@ const SinglePostPage = ({
         {post.title}
       </Heading>
       <HStack mt={3}>
-        <Text as="time" dateTime={post.date} fontSize="s" color="gray.600">
+        <Text
+          as="time"
+          dateTime={post.date}
+          fontSize="s"
+          color="gray.500"
+          fontStyle="italic"
+        >
           {format(parseISO(post.date), "LLLL d, yyyy")}
         </Text>
-
-        {post.tags.map((tag) => (
-          <Badge colorScheme={tagColor(tag)} key={tag}>
-            {`#${tag}`}
-          </Badge>
-        ))}
+        <TagsList tags={post.tags} />
       </HStack>
       <Content
         components={{

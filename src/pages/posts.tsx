@@ -1,43 +1,27 @@
 import {
   Link as ChakraLink,
-  Container,
   Box,
   Heading,
   Text,
   Card,
   CardHeader,
   CardBody,
+  HStack,
+  VStack,
 } from "@chakra-ui/react";
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import NextLink from "next/link";
-import { compareDesc, format, parseISO } from "date-fns";
+import { format, parseISO, compareDesc } from "date-fns";
 import { allPosts, Post } from ".contentlayer/generated";
+import { TagsList } from "src/components/TagsList";
 
 export const getStaticProps: GetStaticProps<{
   posts: Post[];
 }> = () => {
-  return { props: { posts: allPosts } };
-};
-
-const PostCard = ({ post }) => {
-  return (
-    <Box mb="8">
-      <Heading mb="1" size="lg">
-        <ChakraLink as={NextLink} href={post.url}>
-          {post.title}
-        </ChakraLink>
-      </Heading>
-      <Text
-        as="time"
-        dateTime={post.date}
-        mb="2"
-        fontSize="xs"
-        color="gray.600"
-      >
-        {format(parseISO(post.date), "LLLL d, yyyy")}
-      </Text>
-    </Box>
+  const sortedPosts = allPosts.sort((a, b) =>
+    compareDesc(parseISO(a.date), parseISO(b.date)),
   );
+  return { props: { posts: sortedPosts } };
 };
 
 export default function Posts({
@@ -46,13 +30,36 @@ export default function Posts({
   return (
     <Box key={1}>
       {posts.map((post) => (
-        <ChakraLink as={NextLink} href={`/posts/${post.slug}`}>
-          <Card key={post.slug} mb="8">
+        <ChakraLink
+          as={NextLink}
+          href={`/posts/${post.slug}`}
+          textDecoration="none"
+          _hover={{ textDecoration: "none" }}
+        >
+          <Card
+            key={post.slug}
+            mb="8"
+            _hover={{ transform: "scale(1.02)", transition: "0.2s" }}
+          >
             <CardHeader>
               <Heading size="md">{post.title}</Heading>
             </CardHeader>
-            <CardBody>{post.description}</CardBody>
-            <CardBody>{format(parseISO(post.date), "LLLL d, yyyy")}</CardBody>
+            <CardBody>
+              <VStack align="start">
+                <HStack>
+                  <Text
+                    fontStyle={"italic"}
+                    as="time"
+                    dateTime={post.date}
+                    fontSize="s"
+                    color="gray.500"
+                  >
+                    {format(parseISO(post.date), "LLLL d, yyyy")}
+                  </Text>
+                  <TagsList tags={post.tags} />
+                </HStack>
+              </VStack>
+            </CardBody>
           </Card>
         </ChakraLink>
       ))}
