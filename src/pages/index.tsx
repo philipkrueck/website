@@ -11,7 +11,13 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
-import { IoLogoGithub, IoLogoLinkedin, IoMail } from "react-icons/io5";
+import {
+  IoLogoGithub,
+  IoLogoLinkedin,
+  IoMail,
+  IoLogoTwitter,
+  IoLogoYoutube,
+} from "react-icons/io5";
 import { RoundedBox } from "../components/RoundedBox";
 import { IconType } from "react-icons/lib";
 
@@ -72,6 +78,16 @@ const SocialSection = () => (
         url="https://linkedin.com/in/philipkrueck"
         text="@philipkrueck"
         leftIcon={IoLogoLinkedin}
+      />
+      <SocialItem
+        url="https://twitter.com/philipkrueck"
+        text="@philipkrueck"
+        leftIcon={IoLogoTwitter}
+      />
+      <SocialItem
+        url="https://www.youtube.com/channel/UC5gh-x8bh4psIRdKLpf5Cbw"
+        text="@philipkrueck"
+        leftIcon={IoLogoYoutube}
       />
       <SocialItem
         url="mailto:hi@philipkrueck.com"
