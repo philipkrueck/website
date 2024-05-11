@@ -1,8 +1,10 @@
 import { allPosts, type Post } from "contentlayer/generated";
+import React from "react";
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import { format, parseISO } from "date-fns";
 import { TagsList } from "src/components/TagsList";
 import {
+  Checkbox,
   UnorderedList,
   OrderedList,
   Text,
@@ -20,7 +22,7 @@ import {
   ListItem,
   Code,
   HStack,
-  Spacer,
+  VStack,
 } from "@chakra-ui/react";
 import { getMDXComponent } from "next-contentlayer/hooks";
 
@@ -91,7 +93,34 @@ const SinglePostPage = ({
           inlineCode: (props) => <Code my={3} {...props} />,
           ul: (props) => <UnorderedList my={1} {...props} />,
           ol: (props) => <OrderedList my={1} {...props} />,
-          li: (props) => <ListItem my={1} {...props} />,
+          li: ({ children, ...props }) => {
+            const childNodes = React.Children.toArray(children);
+
+            let text = "";
+
+            React.Children.forEach(childNodes, (child) => {
+              if (typeof child === "string") {
+                text += child;
+              }
+            });
+
+            if (text.startsWith("[ ]")) {
+              return (
+                <VStack spacing={3} align="start">
+                  <Checkbox>{text.replace("[ ]", "")}</Checkbox>
+                </VStack>
+              );
+            }
+
+            if (text.startsWith("[x]")) {
+              return (
+                <VStack spacing={3} align="start">
+                  <Checkbox>{text.replace("[x]", "")}</Checkbox>
+                </VStack>
+              );
+            }
+            return <ListItem {...props}>{children}</ListItem>;
+          },
           img: (props) => <Image my={3} {...props} />,
           hr: (props) => <Divider my={3} {...props} />,
           blockquote: (props) => (
