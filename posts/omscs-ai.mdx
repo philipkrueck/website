@@ -1,0 +1,297 @@
+---
+title: "Course Review: Artificial Intelligence"
+description: "Getting Computers to solve problems that humans perceive as requiring intelligence."
+date: 2024-05-11
+tags: ["OMSCS", "CS6601"]
+---
+
+## What the Course Is About
+> "Artificial Intelligence is the art of creating machines that perform functions that require intelligence when performed by people." - Ray Kurzweil
+
+The course covers a wide range of topics in the field of AI tracking its development up until the early 2000s.
+Some of the topics covered include:
+- Graph search algorithms
+- Simulated annealing
+- Genetic algorithms
+- Multi-agent Games
+- Algorithmic Constraint Satisfaction
+- Bayes Networks
+- Machine Learning (incl. CNNs)
+- Hidden Markov Models
+- First-Order Logic Models
+- Partially Observable Stochastic Search
+- Reinforcement Learning
+
+The course doesn't cover more recent developments including:
+- Self Supervised Learning
+- Generative Adversarial Networks
+- Synthetic Data Generation
+- Large Language Models (transformer architecture)
+
+## Personal Note
+
+I have taken this course in Spring 2024 along with [AOS](https://www.philipkrueck.com/posts/omscs-aos).
+Prior to this course I have taken the following 4 OMSCS courses: GIOS, DBMS, CN, AIES.
+
+## Graded Deliverables
+
+Here's the grading scheme breakdown:
+- **Plagiarism Quiz** - 4%
+- **Assignment 0**    - 1%
+- **Assignment 1**    - 12%
+- **Asisgnment 2**    - 12%
+- **Asisgnment 3**    - 12%
+- **Asisgnment 4**    - 12%
+- **Asisgnment 5**    - 12%
+- **Midterm Exam**    - 15%
+- **Final Exam**      - 20%
+
+### Plagiarism Quiz
+
+This is an easy 4% that you can get by simply reading the "class policies" and answering a few questions.
+
+### Assignments
+
+The course has 6 assignments, but only the best 5 count towards your final grade.
+Submission for all assignments is done through Gradescope.
+All assignments are implemented in Python and most provide a Jupyter Notebook template.
+If you have access to Georgia Tech's Github, you can checkout all [assignment repos](https://github.gatech.edu/omscs6601)
+
+
+#### Assignment 0: Warmup
+
+This assignment ensures that you have setup the necessary pip dependencies for the other assignments.
+This assignment also contains a non-mandatory part on Jupyter Notebooks, Python and Git.
+
+Time spent: ~1 hour
+
+#### Assignment 1: Tridirectional Search
+
+You are given a graph of cities and have to implement a couple of search algorithms.
+The algorithms get increasingly more difficult starting with [BFS](https://en.wikipedia.org/wiki/Breadth-first_search), 
+[UCS](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Practical_optimizations_and_infinite_graphs), 
+[A*](https://en.wikipedia.org/wiki/A*_search_algorithm),
+[bidirectional Search](https://en.wikipedia.org/wiki/Bidirectional_search)
+and ending with tridirectional search.
+The lectures and resources provide a good foundation for implementing these algorithms.
+However, the final algorithm (an optimized version of tridirectional search) is quite complex and very time consuming.
+It requires reading through some research papers and translating the concepts into code.
+I gave up after spending ~2 hours on this part as it only accounts for only 8% of the assignment grade.
+
+Time spent: ~10 hours
+
+#### Assignment 2:
+
+The goal of this assignment is to create an AI that can play the game of [Isolation](https://en.wikipedia.org/wiki/Isolation_(board_game)).
+Isolation is introduced in the lectures on Game Playing.
+It seems like they vary the rules of the game in every semester or every couple of semesters slightly.
+Your AI will use the [Minimax algorithm](https://en.wikipedia.org/wiki/Minimax) with [alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning#:~:text=Alpha%E2%80%93beta%20pruning%20is%20a,Connect%204%2C%20etc.) and [iterative deepening](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search) to play the game.
+All of these concepts are covered in the lectures on Game Playing.
+Once I understood the concepts in the lectures, I found the implementation quite straightforward.
+The Jupyter notebook provides some really nice visualizations for the game board and the AI's moves.
+The grading for this assignment is based on the percentage of games your AI wins against a hidden implementation from the course staff.
+To get the final few percent you will need to use some more advanced techniques like tweaking
+the evaluation function for the variation of the game they provide.
+To get the full 100% you may need to get a little fancy with your algo, I got 95% by just implementing the basics suggested.
+I'm not sure about the effort/reward ratio of getting the final few percent.
+However, if you do go for it, you can enter a bonus competition against the AIs of your peers.
+My gut feeling tells me this would be very comptetitive.
+
+Time spent: ~8 hours
+
+#### Assignment 3
+
+Assignment 3 requires you to build a Bayes Network and implement a sampling algorithm to answer probabilistic queries on the network.
+First, you setup the network using the Python library [`pgmpy`](https://pgmpy.org/index.html).
+Once you figure out the library, this part is quite straightforward.
+Then you answer some questions about the network by calculating probabilities with `pgmpy`.
+The challenging part of the assignment is implementing the sampling algorithms.
+You implement both the [Gibbs Sampling](https://en.wikipedia.org/wiki/Gibbs_sampling) and [Metropolis-Hastings](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) algorithms.
+I found this part very challenging and almost gave up on it.
+Reading through the resources and understanding the concepts was key to solving this assignment.
+Also, some students posted really useful clarifications on Ed which helped me in cracking the assignment.
+The implementation in Python is easy, but understading all the moving parts of the sampler is hard.
+
+Time spent: ~12 hours
+
+#### Assignment 4
+
+In this assignment you build a multi-class classifier by implementing a random forest.
+First, you implement some helper functions to calculate statistical measures for 
+accuracy, precision, recall, and confusion matrix.
+Next, you implement functions to calculate the given statistical measures for 
+entropy, information gain and gini impurity.
+Then you implement a single decision tree and finally a random forest.
+Overall, I didn't find any major difficulties with this assignment. It's just about implementing the algorithms.
+
+Time spent: ~8 hours
+
+#### Assignment 5
+
+You implement a k-means clustering algorithm and a Gaussian Mixture Model.
+This assignment requires you to implement many individual functions in order to build up to the final algorithms.
+Each function isn't too difficult, but there are many of them.
+Furthermore, you have to implement all functions in a vectorized way using `numpy`, otherwise your implementation will
+timeout on Gradescope.
+Whenever you're writing a for loop to iterate over a matrix there's probably a more optimized way using `numpy`.
+I struggled a lot with GS timeouts in the beginning due to my non-optimal implementation.
+For the final part, you implement the Bayesian Information Criterion to determine the optimal number of 
+clusters for the Gaussian Mixture Model.
+I couldn't get this part to work properly and had to skip it.
+
+I found this assignment to be the most challenging of all the assignments as it was time intensive, required
+a fair bit of statistical background and required efficient implementations of matrix operations using numpy.
+
+Time spent: ~12 hours
+
+#### Assignment 6
+
+I didn't do this assignment, since I already had 5 assignments with grades above 90%.
+It involves Hidden Markov Models and according to some students it isn't too difficult in case you have a bad grade on one of the other assignments.
+Possibly, you could swap out assignment 3 or 5 for this one to reduce the overall workload. But, it could be a bit risky as you won't have any backup assignments if you don't get a good grade on this one.
+
+Time spent: 0 hours
+
+#### Bonus Assignments
+
+The first 3 assignments have some bonus parts to get extra credit.
+To me these bonus assignments looked pretty interesting, 
+but appeared as massive time sinks for the amount of extra credit they provide. 
+If you have the time, they will probably cement your understanding of the concepts covered in the assignments. 
+But it's definitely not required.
+I have personally not attempted any of these bonus parts.
+
+### Exams
+
+The course has two take home exams which are open book, but not open internet.
+You have about 1 week to complete each exam.
+They are very fair in that they cover nothing outside of the lectures.
+The format rewards effort and takes out any luck factor compared to writing regular exams.
+In general, the more time you spend on the questions, rewatching lectures, reading the textbook, the more likely you are to get a good grade.
+However, they are very time consuming.
+Both exams had some errors which were corrected by the course staff on Ed.
+Also they posted a lot of clarifications on Ed, so I would definitely monitor that.
+
+#### Midterm
+
+The midterm covers lecture content from 1-6.
+
+- Lecture 1: Search
+- Lecture 2: Simulated Annealing
+- Lecture 3: Game Playing
+- Lecture 4: Constraint Satisfaction
+- Lecture 5: Probability
+- Lecture 6: Bayes Nets
+
+I found that 15% for the midterm was a bit low when compared to a single assignment which is worth 12.5%. 
+If you really want to ace the exam, rewatching the lectures and reading the textbook would be necessary.
+However, this is a lot of effort and wasn't worth it for me.
+
+Time spent on the midterm: ~8 hours
+
+#### Final
+
+The final exam covers all content from the midterm as well as the remaining lectures:
+
+  - Lecture 7: Machine Learning
+  - Lecture 8: Pattern Recognition Through Time
+  - Lecture 9: Logic & Planning
+  - Lecture 10: Planning under Uncertainty
+
+Around 45% of questions cover lessons 1-6 and are similar to the midterm.
+The remaining 55% of the questions cover the remaining lectures.
+Had I known this distribution, I would have spent more time on the earlier lectures as it gives a double benefit.
+which would be useful for both the midterm and almost half of the final.
+
+Time spent on the final: ~11 hours
+
+### Grading Curve
+
+The course grading is on a curve. Here's the distribution for Spring 24:
+- A: > 90%
+- B: > 76%
+- C: > 61%
+- D: > 46%
+
+### My Grades
+
+- **Overall Grade**: 89.92% (B - so close to an A!)
+  - *Plagiarism Quiz*: 79%
+  - *Assignment 0*: 100%
+  - *Assignment 1*: 91%
+  - *Assignment 2*: 95%
+  - *Assignment 3*: 100%
+  - *Assignment 4*: 100%
+  - *Assignment 5*: 92%
+  - *Midterm*: 76%
+  - *Final*: 78%
+
+## The Course Materials
+
+### Lecture Videos & Content
+
+You can find the lectures on [Ed](https://edstem.org/us/courses/46010/lessons/) with your GT login.
+I believe some of the lectures are straight from some older MOOCs.
+The course has a couple of different lecturers: Peter Norvig, Sebastian Thrun, and Thad Starner.
+Most lectures are held by Thad Starner who is joined by a student. 
+The lecture style between the two is conversational which I found to be engaging.
+The content itself is very interesting. However, the videos are about a decade old.
+Furthermore, the course doesn't cover any of the recent developments in AI.
+
+### Textbook
+
+The textbook in this course is ["Artificial Intelligence: A Modern Approach" by Stuart Russell & Peter Norvig](https://aima.cs.berkeley.edu/). 
+I believe this is the classic book on AI and is used in many AI courses around the world. I personally didn't read much of the book, since I found the lectures to be sufficient.
+The book is a great supplementary resource. However, it is definitely not required and in some cases I found it to be more mathematical than is required for the course.
+
+## Personal Opinion on AI
+
+### My Background going into the course
+
+I have a decent background in programming, algorithms and Python.
+I have taken undergraduate courses in probability and statistics.
+However, I didn't have any experience with traditional AI as taught in this course.
+
+I think the course is pretty self contained, but some algorithm experience & statistics will be helpful.
+
+### How Hard Was The Course
+
+I didn't find it as hard as expected.
+It's certainly harder than some of the other courses I have taken including AIES, DBMS, and CN.
+But it's not as hard as GIOS or AOS.
+
+### What I Liked
+
+- Choosing Python as the programming language for the assignments
+- Very cool AI algorithms and concepts
+- Little busy work (compared to courses like AIES)
+- Possible to work ahead
+- Well-designed assignments
+
+### What I Disliked
+
+- It would be nice to have at least some pointers to resources on the current state of the art in AI.
+- The final few lectures didn't have any corresponding assignments. I think it would have been good to have at least one assignment to cover reinforcment learning for example. I really enjoyed that the other lectures had corresponding assignments which kept me motivated and cemented my understanding of the topics.
+- The exams needed many clarifications on Ed and had constant regrades (e.g. my final grade went from 66 to 78).
+
+### Should You Take This Class
+
+- *Are you looking for an easy course with minimal workload this semester?* There are easier courses out there.
+- *Is it your first semester in OMSCS?* This might not be the best course to start with.
+- *Are you looking for a course that covers a lot of ground on AI - not just the hyped stuff?* Go for it!
+
+### Tips for Success
+
+How I would approach the course if I were to take it again:
+
+- Focus energy on the assignments
+- Once you hit >90% on an assignment, time box the rest of the assignment
+- Do 5 out of the 6 assignments (only the best 5 are counted). Skip assignment 3, 5 to minimize total time spent.
+- Watch the lectures for high level understanding
+- Focus a disproportionate amount of time on the midterm - you'll be rewarded in both midterm & final
+
+## Other Resources
+
+- [Review from Coolstercodes](https://coolstercodes.com/georgia-tech-omscs-artificial-intelligence-review-cs-6601/)
+- [OMSCentral Reviews](https://www.omscentral.com/courses/artificial-intelligence/reviews)
+- [Official Course Page](https://omscs.gatech.edu/cs-6601-artificial-intelligence)
