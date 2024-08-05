@@ -80,7 +80,7 @@ const SocialSection = () => (
         leftIcon={IoLogoLinkedin}
       />
       <SocialItem
-        url="https://twitter.com/philipkrueck"
+        url="https://x.com/philipkrueck"
         text="@philipkrueck"
         leftIcon={IoLogoTwitter}
       />
