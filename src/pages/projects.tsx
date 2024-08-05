@@ -32,7 +32,7 @@ const Projects = () => (
             <Heading size="md">{"omsplanner.pro"}</Heading>
             <Text>
               I built a planner for Online Masters students at Georgia Tech to
-              manage their studies.
+              optimally manage their studies in Notion.
             </Text>
           </Stack>
         </CardBody>
