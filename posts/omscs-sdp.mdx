@@ -1,0 +1,229 @@
+---
+title: "Course Review: Software Development Process"
+date: 2024-08-06
+tags: ["OMSCS", "CS6300", "SDP"]
+---
+
+> "Software is like entropy: It is difficult to grasp, weighs nothing, and obeys the Second Law of Thermodynamics; i.e., it always increases." - Norman Augistine (former CEO of Lockheed)
+
+## What the Course Is About
+
+This course covers fundamental topics in software development. If you're already working as a software engineer, you'll likely recognize many of these subjects:
+
+- Software Development Methodologies (Agile, Waterfall, and friends)
+- Requirements Engineering
+- UML Modeling (Diagrams galore!)
+- Architectural Patterns
+- Android Development Basics
+- Software Verification
+- Black-Box and White-Box Testing
+- Refactoring
+
+The course is entirely project-based, you don't have to stress about taking any exams.
+
+## Personal Note
+
+I took SDP in the summer semester of 2024 
+
+I have taken this course in the summer semster of 2024 along with KBAI.
+Prior to this course I have taken GIOS, DBS, CN, AIES,
+[AOS](https://www.philipkrueck.com/posts/omscs-aos) and [AI](https://www.philipkrueck.com/posts/omscs-ai).
+
+## Graded Deliverables
+
+Here's the **grading scheme**:
+- **Assignments**: 44%
+  - *1: Team Matching Survey*: 2%
+  - *2: Git Usage*: 5%
+  - *3: Basic Java Coding & JUnit Testing*: 10%
+  - *4: Simple Android App*: 10%
+  - *5: Software Design*: 2%
+  - *6: White-Box Testing*: 15%
+- **Group Project**: 28%
+  - *Project*: 18%
+  - *Collaboration*: 10%
+- **Individual Project**: 25%
+- **Class Participation**: 3%
+
+### Assignments
+
+The course has 6 assignments. Each is released about 1 week before the deadline.
+So you'll have 1 week to work on each assignment and it's not really possible to work ahead.
+This might sound stressful at first, but don't worry - the assignments are not too challenging and
+can usually be completed in a few hours.
+
+#### Assignment 1: Team Matching Survey
+
+Here you simply fill out a survey to get matched in a group for the group project.
+The instructors want to create balanced teams based on experience and time zone
+
+Time spent: 15 minutes
+
+#### Assignment 2: Git Usage
+
+This assignment is very easy if you've used Git & GitHub before.
+Basically, you use a bunch of git commands in order to get a repo into a specific state.
+Just make sure to follow the instructions carefully.
+A helpful tip: Set git config pull.rebase false - I had to restart once because my merge strategy was set to rebase.
+Don't worry if you make a mistake; you can reset the git repo and start over if needed.
+For submission, you simply provide the final git commit hash to Gradescope. 
+The autograder then verifies that your repo state is correct.
+These skills covered in this assignment are actually extremly useful as a software engineer.
+
+Time spent: ~2 hours
+
+#### Assignment 3: Basic Java Coding & JUnit Testing
+
+In this assignment, you implement a Java class and some JUnit tests for string operations.
+E.g. you'll write a function to symmetrically encrypt string.
+As with previous assignments, you submit your code to Gradescope, and the autograder provides immediate feedback.
+My recommendation is to use [IntelliJ](https://www.jetbrains.com/idea/) for this and the following Java assignments.
+While I generally prefer other IDEs like VS Code or NeoVim for coding, IntelliJ is the way to go for Java.
+
+Time spent: ~3 hours
+
+#### Assignment 4: Simple Android App
+
+In this assignment, you build a simple Android app based on your code from Assignment 3.
+The main challenge here is figuring out how to build a UI in Android and setting up Android Studio.
+
+Key points:
+- The UI doesn't need to be fancy whatsoever (see screenshot 😂), it just needs to work.
+- I strongly recommend following the setup instructions for Android Studio closely, as this was a a stumbling block for me and some of my classmates.
+- Disappointingly, the course still uses Java & XML instead of Kotlin & Jetpack Compose for Android Development 🙈.
+
+Time spent: ~4 hours
+
+<img src="/android-project.png" alt="Alt text" width="300" objectFit="cover" />
+
+#### Assignment 5: Software Design
+
+In assignment 5 you are tasked with creating a UML class diagram for a job comparison application.
+It's only worth 5% of your grade, but it will be reused in the group project.
+I used [Mermaid.js](https://mermaid-js.github.io/mermaid/#/) to create the diagram and can definitely recommend the tool.
+
+Time spent: ~3-4 hours
+
+#### Assignment 6: White-Box Testing
+
+This assignment challenges you to create specific Java methods with particular fault-revealing properties
+and develop corresponding test suites to demonstrate your understanding of various coverage criteria.
+This is by far the hardest assignment. In hindsight, I should have spent more time and effort on this given that it's worth 15% of the grade.
+
+Time spent: ~5 hours
+
+### Group Project
+
+You collaborate with 3 other assigned students to implement a Job comparison app in Android. The project involves not only implementing the app but also documenting your development process through a series of deliverables including:
+- UML diagrams
+- Project plan
+- Test plan
+- Documentation of design decisions
+
+In my group, we were able to split tasks and work async on most things.
+I have done group projects in AOS and DB before, and this was by far the easiest one.
+
+### Individual Project
+
+The goal of the individual project is to implement a simple CLI tool like `grep` in Java using Test-Driven Development (TDD).
+The project is split into 3 deliverables, each released weekly:
+1. Generate a series of abstract test cases using the category partition method with a provided tool.
+This is by far the hardest deliverable in my opinion, as you can't get feedback via Gradescope and the tool is a bit clunky.
+2. Implement the abstract test cases in JUnit tests. On Gradescope, your test suite is checked against the instructors' expected coverage.
+I'm not sure if it's worth hunting down all the edge cases they want to see. Once I hit 90%, I timeboxed the rest.
+3. Implement the actual CLI tool. You can test your implementation against a hidden test suite on Gradescope.
+Start by testing against your own JUnit tests, which should give you a decent grade on Gradescope.
+Then hunt down the final edge cases.
+Again, I timeboxed myself here. The Gradescope output for this deliverable is more useful than in D2.
+
+### Class Participation
+
+The class participation grade is based on the lecture attendance and Ed Discussion participation.
+Also, they want you to watch the lectures in the provided schedule as much as possible.
+In my experience, I didn't actively engage in any discussion,
+but I did watch the lectures as scheduled.
+This approach was sufficient to earn 100% for the participation grade.
+
+### Grading Cut-Offs
+
+The course grading is not on a curve. Here are the cut-offs:
+- A: >= 90%
+- B: >= 80%
+- C: >= 70%
+- D: >= 60%
+- F: <  60%
+
+### My Grades
+
+- **Overall Grade**: 90% (A - on the dot! 🎉)
+  - *Assignment 1*: 100%
+  - *Assignment 2*: 100%
+  - *Assignment 3*: 100%
+  - *Assignment 4*: 100%
+  - *Assignment 5*: 100%
+  - *Assignment 6*: 65%
+  - *Individual Project*: 88.8%
+  - *Group Project*: 91%
+  - *Class Participation*: 100%
+
+## The Course Materials
+
+The only provided course materials are video lectures and some optional readings.
+The course isn't based on a textbook and the lectures cover all the necessary content.
+
+### Lectures
+
+I think the lectures are well structured and the instructor does a good job at explaining the content.
+That said, the content was mostly repetition for me and I didn't learn too much except for some of the
+white-box testing methods and test coverage metrics.
+Imo, working as a software engineer will teach you more about software development than this course.
+Many modern and important software development topics aren't covered, e.g. CI/CD, DevOps, feature flags, etc.
+
+The lectures are available for free on YouTube for you to take a look:
+
+- [YouTube Lecture Playlist 1/3](https://www.youtube.com/playlist?list=PLAwxTw4SYaPkNAtqsKcFkUGpf4j67NBaz)
+- [YouTube Lecture Playlist 2/3](https://www.youtube.com/playlist?list=PLAwxTw4SYaPm8PAGH7ov2Bj-nG4sXgCtJ)
+- [YouTube Lecture Playlist 3/3](https://www.youtube.com/playlist?list=PLAwxTw4SYaPkoQFThzsc9e7Fe3QV_KJCs)
+
+## Personal Opinion on SDP
+
+### My Background going into the course
+
+I have multiple years of professional experience as a software engineer and have taken a similar course in undergrad.
+
+### How Hard Was The Course
+
+In terms of effort, it's the least effort I've put into a course so far. 
+The content is also not too difficult to grasp. 
+That being said, I almost got a B, because I was too lazy on the last assignment.
+
+### What I Liked
+
+- Many assignments have autograding, so you can get immediate feedback.
+- It's an easy course counting towards the Interactive Intelligence Specialization
+- There are no exams which is nice for a change.
+
+### What I Disliked
+
+- Class is heavily back-loaded, with no option to work ahead.
+- The course primarily uses Java, which may feel outdated for modern software development.
+- The Android tooling and practices are not up-to-date with industry standards.
+
+### Should You Take This Class
+
+- *You want an easy course for the summer or to take alongside another harder course?* This is the course for you!
+- *You don't have any experience building software projects (i.e. maybe you come from a non-traditional background)?* The course will give you a good introduction to software development.
+- *You're a professional software engineer that wants to challenge himself and learn interesting tech/CS?* Pick any course except this one.
+
+### How I Would Approach The Course If I Were To Take It Again
+
+- Watch the assigned lectures every week at 2x speed to get participation points.
+- Get the assignments/project deliverables done as soon as they are released.
+- Rewatch relevant lectures for project deliverables.
+- Focus a lot more effort on assignment 6.
+
+## Other Resources
+
+- [OMSCentral Reviews](https://www.omscentral.com/courses/software-development-process/reviews)
+- [Official Course Page](https://omscs.gatech.edu/cs-6300-software-development-process)
+- [CoolsterCodes Review](https://coolstercodes.com/georgia-tech-omscs-software-development-process-review-cs-6300/)
