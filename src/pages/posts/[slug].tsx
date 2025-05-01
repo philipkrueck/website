@@ -1,4 +1,5 @@
 import { allPosts, type Post } from "contentlayer/generated";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import React from "react";
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import { format, parseISO } from "date-fns";
@@ -20,7 +21,7 @@ import {
   Divider,
   Image,
   ListItem,
-  Code,
+  // Code,
   HStack,
   VStack,
 } from "@chakra-ui/react";
@@ -89,8 +90,30 @@ const SinglePostPage = ({
               {...props}
             />
           ),
-          pre: (props) => <Code my={3} {...props} />,
-          inlineCode: (props) => <Code my={3} {...props} />,
+          pre: (props) => <pre {...props} />, // Use <pre> instead of <div>
+          code: ({ className, children, ...props }) => {
+            const codeString = String(children).trim();
+            const lines = codeString.split("\n");
+
+            if (lines.length === 1) {
+              return (
+                <code className={className} {...props}>
+                  {codeString}
+                </code>
+              );
+            }
+
+            return (
+              <SyntaxHighlighter
+                language="yaml" // Make this dynamic if needed
+                PreTag="pre" // Ensure SyntaxHighlighter uses <pre> tag
+                {...props}
+              >
+                {children}
+              </SyntaxHighlighter>
+            );
+          },
+
           ul: (props) => <UnorderedList my={1} {...props} />,
           ol: (props) => <OrderedList my={1} {...props} />,
           li: ({ children, ...props }) => {

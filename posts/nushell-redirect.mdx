@@ -1,0 +1,56 @@
+---
+title: "Redirecting Output in Nushell"
+date: 2025-04-30
+tags: ["Nushell"]
+---
+
+I've recently switched my default Shell to [Nushell](https://www.nushell.sh/) in an attempt to bring type safety to my Shell experience. This has been a big win so far, but there are some downsides to Nushell.
+
+While a deliberate design decision, not all POSIX shell operations can be translated directly to Nu.
+Today, I learned that the standard redirection operator `>` has a different meaning.
+
+I wanted to deploy a simple nginx pod to my Kubernetes home lab.
+Using the `--dry-run=client` flag, I aimed to generate and then edit the resulting YAML file:
+
+```sh
+kubectl run nginx-yaml --image=nginx --dry-run=client -oyaml > nginx.yaml
+```
+
+This operation silently failed. In other Shells such as `bash` or `zsh`, the above command would redirect the stdout YAML to the file `nginx.yaml`.
+
+Now, running the same command in Nu prints the following to stdout:
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-yaml
+  name: nginx-yaml
+spec:
+  containers:
+  - args:
+    - '>'
+    - out.yaml
+    image: nginx
+    name: nginx-yaml
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+
+Interestingly, even though the `>` redirection operator doesn't exist in Nu, the command actually succeeds.
+
+Let's explore why that is the case.
+
+The `>` is treated as a raw argument to the `kubectl run` command. So ">" and "out.yaml" become arguments of the `kubectl run` command and hence become part of the generated YAML spec. `kubectl` was expecting an argument for the entrypoint in `spec.container.args` after the `--image` flag.
+
+I then learned to pipe to Nushells built-in `save` command, rather than using the familiar Unix redirection patterns:
+
+```nu
+k run nginx-yaml --image=nginx --dry-run=client -oyaml | save nginx.yaml
+```
+
+Let me know if you've encountered similar curiosities when working with Nushell.
