@@ -1,12 +1,12 @@
 ---
 title: "Redirecting Output in Nushell"
-date: 2025-04-30
+date: 2025-05-03
 tags: ["Nushell"]
 ---
 
-I've recently switched my default Shell to [Nushell](https://www.nushell.sh/) in an attempt to bring type safety to my Shell experience. This has been a big win so far, but there are some downsides to Nushell.
+I've recently switched my default shell to [Nushell](https://www.nushell.sh/) in an attempt to bring type safety and to my shell experience. This has been a big win so far, but there are some downsides to Nushell.
 
-While a deliberate design decision, not all POSIX shell operations can be translated directly to Nu.
+While a deliberate design decision, not all POSIX shell operations can be translated directly to Nushell.
 Today, I learned that the standard redirection operator `>` has a different meaning.
 
 I wanted to deploy a simple nginx pod to my Kubernetes home lab.
@@ -16,9 +16,9 @@ Using the `--dry-run=client` flag, I aimed to generate and then edit the resulti
 kubectl run nginx-yaml --image=nginx --dry-run=client -oyaml > nginx.yaml
 ```
 
-This operation silently failed. In other Shells such as `bash` or `zsh`, the above command would redirect the stdout YAML to the file `nginx.yaml`.
+This operation silently failed. In other shells such as `bash` or `zsh`, the above command would redirect the stdout YAML to the file `nginx.yaml`.
 
-Now, running the same command in Nu prints the following to stdout:
+However, running the same command in Nushell prints the following to stdout:
 
 ```
 apiVersion: v1
@@ -41,7 +41,7 @@ spec:
 status: {}
 ```
 
-Interestingly, even though the `>` redirection operator doesn't exist in Nu, the command actually succeeds.
+Interestingly, even though the `>` redirection operator doesn't exist in Nushell, the command actually succeeds.
 
 Let's explore why that is the case.
 

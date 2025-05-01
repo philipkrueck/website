@@ -21,9 +21,9 @@ import {
   Divider,
   Image,
   ListItem,
-  // Code,
   HStack,
   VStack,
+  Code,
 } from "@chakra-ui/react";
 import { getMDXComponent } from "next-contentlayer/hooks";
 
@@ -97,9 +97,9 @@ const SinglePostPage = ({
 
             if (lines.length === 1) {
               return (
-                <code className={className} {...props}>
+                <Code className={className} {...props}>
                   {codeString}
-                </code>
+                </Code>
               );
             }
 
