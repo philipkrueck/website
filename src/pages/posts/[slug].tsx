@@ -107,6 +107,8 @@ const SinglePostPage = ({
               <SyntaxHighlighter
                 language="yaml" // Make this dynamic if needed
                 PreTag="pre" // Ensure SyntaxHighlighter uses <pre> tag
+                showLineNumbers
+                showInlineLineNumbers
                 {...props}
               >
                 {children}
