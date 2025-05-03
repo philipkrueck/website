@@ -1,6 +1,7 @@
 import { allPosts, type Post } from "contentlayer/generated";
+import { CopyIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import React from "react";
+import React, { useState } from "react";
 import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import { format, parseISO } from "date-fns";
 import { TagsList } from "src/components/TagsList";
@@ -92,8 +93,16 @@ const SinglePostPage = ({
           ),
           pre: (props) => <pre {...props} />, // Use <pre> instead of <div>
           code: ({ className, children, ...props }) => {
+            const [copied, setCopied] = useState(false);
             const codeString = String(children).trim();
             const lines = codeString.split("\n");
+
+            const handleCopy = () => {
+              navigator.clipboard.writeText(codeString).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              });
+            };
 
             if (lines.length === 1) {
               return (
@@ -102,17 +111,24 @@ const SinglePostPage = ({
                 </Code>
               );
             }
-
             return (
-              <SyntaxHighlighter
-                language="yaml" // Make this dynamic if needed
-                PreTag="pre" // Ensure SyntaxHighlighter uses <pre> tag
-                showLineNumbers
-                showInlineLineNumbers
-                {...props}
-              >
-                {children}
-              </SyntaxHighlighter>
+              <Box position="relative" my={5}>
+                <SyntaxHighlighter
+                  language="yaml" // TODO: make this dynamic
+                  PreTag="pre"
+                  showLineNumbers
+                  showInlineLineNumbers
+                  {...props}
+                >
+                  {children}
+                </SyntaxHighlighter>
+                <Box position="absolute" top={2} right={2}>
+                  <button onClick={handleCopy}>
+                    <CopyIcon />
+                    {copied ? "Copied!" : "Copy"}
+                  </button>
+                </Box>
+              </Box>
             );
           },
 
