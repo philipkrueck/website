@@ -41,14 +41,17 @@ const AboutBox = () => (
 const AboutTextSection = () => (
   <VStack align={"left"}>
     <Heading variant="page-title">Philip Krück</Heading>
-    <Text fontSize={"sm"}>Hello there! Some info about me.</Text>
+    <Text fontSize={"sm"}>Backend | DevOps Engineer</Text>
     <Text fontSize={"xs"}>
-      Results-driven Platform Engineer building sustainable AI compute
-      infrastructure at Genesis Cloud. Expertise in backend engineering, full
-      stack web development, and DevOps. Currently exploring smart contract
-      development on Solana, contributing to the web3/crypto ecosystem through
-      solstamp.io. Passionate about leveraging technology to solve complex
-      problems and continuously expanding my technical skillset.
+      I work on building the next generation of AI compute infrastructure at
+      Genesis Cloud.
+    </Text>
+    <Text fontSize={"xs"}>
+      I see myself as a craftsman who is constantly striving to improve at his
+      craft.
+    </Text>
+    <Text fontSize={"xs"}>
+      My current mission: mastering Kubernetes on the path to Kubestronaut.
     </Text>
   </VStack>
 );
