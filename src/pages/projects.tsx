@@ -6,62 +6,60 @@ import {
   Card,
   CardBody,
   Stack,
-  Center,
+  Grid,
 } from "@chakra-ui/react";
 
-const Projects = () => (
-  <Center>
-    <ChakraLink
-      href={"https://solstamp.io"}
-      textDecoration="none"
-      _hover={{ textDecoration: "none" }}
+type ProjectProps = {
+  name: string;
+  description: string;
+  image: string;
+  link: string;
+};
+
+const Project = ({ name, description, image, link }: ProjectProps) => (
+  <ChakraLink
+    href={link}
+    textDecoration="none"
+    _hover={{ textDecoration: "none" }}
+  >
+    <Card
+      key={name}
+      mb="8"
+      maxW="sm"
+      _hover={{ transform: "scale(1.02)", transition: "0.2s" }}
     >
-      <Card
-        key={"solstamp"}
-        mb="8"
-        maxW="sm"
-        _hover={{ transform: "scale(1.02)", transition: "0.2s" }}
-      >
-        <CardBody>
-          <Image src="solstamp.png" alt="solstamp" borderRadius="lg" />
-          <Stack mt="6" spacing="3">
-            <Heading size="md">{"solstamp.io"}</Heading>
-            <Text>
-              I'm building a collection of no-code solana tools including a NFT
-              creator and token minter.
-            </Text>
-          </Stack>
-        </CardBody>
-      </Card>
-    </ChakraLink>
-    {/* <ChakraLink */}
-    {/*   href={"https://omsplanner.pro"} */}
-    {/*   textDecoration="none" */}
-    {/*   _hover={{ textDecoration: "none" }} */}
-    {/* > */}
-    {/*   <Card */}
-    {/*     key={"omsplanner"} */}
-    {/*     mb="8" */}
-    {/*     maxW="sm" */}
-    {/*     _hover={{ transform: "scale(1.02)", transition: "0.2s" }} */}
-    {/*   > */}
-    {/*     <CardBody> */}
-    {/*       <Image */}
-    {/*         src="omsplanner-hero-image.png" */}
-    {/*         alt="Green double couch with wooden legs" */}
-    {/*         borderRadius="lg" */}
-    {/*       /> */}
-    {/*       <Stack mt="6" spacing="3"> */}
-    {/*         <Heading size="md">{"omsplanner.pro"}</Heading> */}
-    {/*         <Text> */}
-    {/*           I built a planner for Online Masters students at Georgia Tech to */}
-    {/*           optimally manage their studies in Notion. */}
-    {/*         </Text> */}
-    {/*       </Stack> */}
-    {/*     </CardBody> */}
-    {/*   </Card> */}
-    {/* </ChakraLink> */}
-  </Center>
+      <CardBody>
+        <Image src={image} alt="solstamp" borderRadius="lg" />
+        <Stack mt="6" spacing="3">
+          <Heading size="md">{name}</Heading>
+          <Text>{description}</Text>
+        </Stack>
+      </CardBody>
+    </Card>
+  </ChakraLink>
+);
+
+const Projects = () => (
+  <Grid templateColumns="repeat(2, 1fr)" gap="6">
+    <Project
+      name=".dotfiles"
+      description="My personal dotfiles will likely be the longest living project throughout my career."
+      image="dotfiles.png"
+      link="https://github.com/philipkrueck/homelab"
+    />
+    <Project
+      name="solstamp.io"
+      description="A collection of open-source no-code Solana tools including a fungible and non-fungible token minter."
+      image="solstamp.png"
+      link="https://solstamp.io"
+    />
+    <Project
+      name="homelab"
+      description="Kubernetes homelab hosting a variety of applications acting as a learning ground for my explorations into the K8s universe."
+      image="homelab.png"
+      link="https://github.com/philipkrueck/homelab"
+    />
+  </Grid>
 );
 
 export default Projects;
