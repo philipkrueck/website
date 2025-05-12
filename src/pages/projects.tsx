@@ -45,7 +45,7 @@ const Projects = () => (
       name=".dotfiles"
       description="My personal dotfiles will likely be the longest living project throughout my career."
       image="dotfiles.png"
-      link="https://github.com/philipkrueck/homelab"
+      link="https://github.com/philipkrueck/.dotfiles"
     />
     <Project
       name="solstamp.io"
