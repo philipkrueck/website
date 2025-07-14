@@ -1,0 +1,28 @@
+---
+title: "When Your Browser Uses More RAM Than Your OS"
+date: 2025-07-14
+tags: ["Tools"]
+---
+
+I really enjoy the user experience of Arc. The minimalistic design as well as its keyboard-centered approach have kept me as a user. Even after The Browser Company announced they would not actively be working on new features, I was still not looking to go back to Chrome immediately. My workflow in Arc is just something I didn't want to give up that fast.
+
+However, I have noticed that my MacBook's battery life was going down significantly over the past months.
+
+Today, I was looking on my system for a `caffeinate` process that I wanted to kill. But what I found instead was **mind boggling**.
+
+After QEMU, which runs Linux VMs and is necessary for Rancher Desktop, almost all memory-hungry processes were related to Arc.
+
+I wrote a little one-liner in nushell to figure out how much memory exactly Arc was using:
+
+```sh
+ps | where name == 'Arc' or name =~ 'Browser' | get mem | math sum
+```
+
+The result: 7.5 Gigabyte.
+
+**7.5 GB to run a browser with a handful of tabs!** That is insanity.
+I actually restarted Arc earlier today.
+It's not like I was playing 20 YouTube videos simultaneously.
+
+In any case, it's time to move on and find a new browser.
+I'll be looking for something that can match Arc's clean interface, but without the memory bloat.
