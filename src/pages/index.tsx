@@ -41,17 +41,15 @@ const AboutBox = () => (
 const AboutTextSection = () => (
   <VStack align={"left"}>
     <Heading variant="page-title">Philip Krück</Heading>
-    <Text fontSize={"sm"}>Backend | DevOps Engineer</Text>
+    <Text fontSize={"sm"}>Cloud | Backend | DevOps | Command Line Enthusiast</Text>
     <Text fontSize={"xs"}>
-      I work on building the next generation of AI compute infrastructure at
-      Genesis Cloud.
+      I work mainly in Golang, Python, Rust and Kubernetes.
     </Text>
     <Text fontSize={"xs"}>
-      I see myself as a craftsman who is constantly striving to improve at his
-      craft.
+      I am passionate about my work as there is always more to learn.
     </Text>
     <Text fontSize={"xs"}>
-      My current mission: mastering Kubernetes on the path to Kubestronaut.
+      I see myself as a craftsman who is constantly striving to improve at his craft.
     </Text>
   </VStack>
 );
