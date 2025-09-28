@@ -30,9 +30,7 @@ jobs:
       - name: Preflight Yarn install (frozen)
         run: |
           yarn --version
-          yarn install --frozen-lockfile
-        # If you use Yarn Berry and rely on Corepack, uncomment the next line:
-        # shell: bash
+          yarn install
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
