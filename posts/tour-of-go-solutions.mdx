@@ -1,0 +1,480 @@
+---
+title: "Tour Of Go Solutions"
+date: 2025-10-15
+tags: ["Golang"]
+---
+
+I've been writing Go professionally since 2022, but have never gotten around
+to fully reading [The Tour of Go](https://go.dev/tour/list).
+It's the Go to resource when it comes to getting started with Golang.
+
+I actually learned quite a few new things that I wasn't aware of before.
+
+Well anyway, here are my solutions.
+
+## Flow Control
+
+[https://go.dev/tour/flowcontrol/8](https://go.dev/tour/flowcontrol/8)
+
+```go
+package main
+
+import (
+  "fmt"
+  "math"
+)
+
+func Sqrt(x float64) float64 {
+  z := 1.0
+  prev := -1.0
+  for i := 0; i < 10; i++ {
+    if math.Abs(z-prev) < 0.0001 {
+      break
+    }
+    prev = z
+    z -= (z*z - x) / (2 * z)
+  }
+
+  return z
+}
+
+func main() {
+  fmt.Println(Sqrt(2))
+}
+```
+
+## Slices
+
+[https://go.dev/tour/moretypes/18](https://go.dev/tour/moretypes/18)
+
+```go
+package main
+
+import "golang.org/x/tour/pic"
+
+func Pic(dx, dy int) [][]uint8 {
+  result := make([][]uint8, dy)
+  for x := range result {
+    result[x] = make([]uint8, dx)
+    for y:= range result[x] {
+      result[x][y] = uint8(x^y)
+    }
+  }
+
+  return result
+}
+
+func main() {
+  pic.Show(Pic)
+}
+```
+
+## Maps
+
+[https://go.dev/tour/moretypes/23](https://go.dev/tour/moretypes/23)
+
+```go
+package main
+
+import (
+  "golang.org/x/tour/wc"
+  "strings"
+)
+
+func WordCount(s string) map[string]int {
+  wordCounts := map[string]int{}
+  for _, word := range strings.Fields(s) {
+    wordCounts[word]++
+  }
+
+  return wordCounts
+}
+
+func main() {
+  wc.Test(WordCount)
+}
+```
+
+## Fibonacci Closure
+
+[https://go.dev/tour/moretypes/26](https://go.dev/tour/moretypes/26)
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci() func() int {
+  x, y := 0, 1
+
+  return func() (z int) {
+    z, x, y = x, y, x+y
+    return
+  }
+}
+
+func main() {
+  f := fibonacci()
+  for i := 0; i < 10; i++ {
+    fmt.Println(f())
+  }
+}
+```
+
+## Stringers
+
+[https://go.dev/tour/methods/18](https://go.dev/tour/methods/18)
+
+```go
+package main
+
+import (
+  "fmt"
+  "strconv"
+  "strings"
+)
+
+type IPAddr [4]byte
+
+func (ip IPAddr) String() string {
+  parts := make([]string, 0, len(ip))
+  for _, b := range ip {
+    part := strconv.Itoa(int(b))
+    parts = append(parts, part)
+  }
+
+  return strings.Join(parts, ".")
+}
+
+func main() {
+  hosts := map[string]IPAddr{
+    "loopback":  {127, 0, 0, 1},
+    "googleDNS": {8, 8, 8, 8},
+  }
+  for name, ip := range hosts {
+    fmt.Printf("%v: %v\n", name, ip)
+  }
+}
+```
+
+## Errors
+
+[https://go.dev/tour/methods/20](https://go.dev/tour/methods/20)
+
+```go
+package main
+
+import (
+  "fmt"
+  "math"
+)
+
+type ErrNegativeSqrt float64
+
+func (e ErrNegativeSqrt) Error() string {
+  return fmt.Sprintf("cannot Sqrt negative number: %v", float64(e))
+}
+
+func Sqrt(x float64) (float64, error) {
+  if x < 0 {
+    return 0, ErrNegativeSqrt(x)
+  }
+
+  z := 1.0
+  prev := -1.0
+  for i := 0; i < 10; i++ {
+    if math.Abs(z-prev) < 0.0001 {
+      break
+    }
+    prev = z
+    z -= (z*z - x) / (2 * z)
+  }
+
+  return z, nil
+}
+
+func main() {
+  fmt.Println(Sqrt(2))
+  fmt.Println(Sqrt(-2))
+}
+```
+
+## Readers
+
+[https://go.dev/tour/methods/22](https://go.dev/tour/methods/22)
+
+```go
+package main
+
+import "golang.org/x/tour/reader"
+
+type MyReader struct{}
+
+func (r MyReader) Read(in []byte) (n int, err error) {
+  n = len(in)
+  for i := 0; i < n; i++ {
+    in[i] = 'A'
+  }
+
+  return n, nil
+}
+
+func main() {
+  reader.Validate(MyReader{})
+}
+```
+
+## rot13Reader
+
+[https://go.dev/tour/methods/23](https://go.dev/tour/methods/23)
+
+```go
+package main
+
+import (
+  "io"
+  "os"
+  "strings"
+)
+
+type rot13Reader struct {
+  r io.Reader
+}
+
+func (r rot13Reader) Read(b []byte) (n int, err error) {
+  n, err = r.r.Read(b)
+  for i := 0; i < n; i++ {
+    if isFirstHalf(b[i]) {
+      b[i] += 13
+    } else if isSecondHalf(b[i]) {
+      b[i] -= 13
+    }
+  }
+
+  return n, err
+}
+
+func isFirstHalf(b byte) bool {
+  return (b >= 'a' && b < 'n') || (b >= 'A' && b < 'N')
+}
+
+func isSecondHalf(b byte) bool {
+  return (b >= 'n' && b <= 'z') || (b >= 'N' && b <= 'Z')
+}
+
+func main() {
+  s := strings.NewReader("Lbh penpxrq gur pbqr!")
+  r := rot13Reader{s}
+  io.Copy(os.Stdout, &r)
+}
+```
+
+## Images
+
+[https://go.dev/tour/methods/25](https://go.dev/tour/methods/25)
+
+```go
+package main
+
+import (
+  "golang.org/x/tour/pic"
+  "image"
+  "image/color"
+)
+
+type Image struct{
+  Width int
+  Height int
+}
+
+func (img Image) Bounds() image.Rectangle {
+  return image.Rect(0, 0, img.Width, img.Height)
+}
+
+func (img Image) ColorModel() color.Model {
+  return color.RGBAModel
+}
+
+func (img Image) At(x, y int) color.Color {
+  v := uint8(x * y)
+  return color.RGBA{v, v, 255, 255}
+}
+
+func main() {
+  m := Image{256, 256}
+  pic.ShowImage(m)
+}
+```
+
+## Equivalent Binary Trees
+
+[https://go.dev/tour/concurrency/8](https://go.dev/tour/concurrency/8)
+
+```go
+package main
+
+import (
+  "golang.org/x/tour/tree"
+  "fmt"
+)
+
+func Walk(t *tree.Tree, ch chan int) {
+  if t == nil {
+    return
+  }
+  Walk(t.Left, ch)
+  ch <- t.Value
+  Walk(t.Right, ch)
+}
+
+func Same(t1, t2 *tree.Tree) bool {
+  chanOne, chanTwo := make(chan int), make(chan int)
+
+  go func() {
+    Walk(t1, chanOne)
+    close(chanOne)
+  }()
+
+  go func() {
+    Walk(t2, chanTwo)
+    close(chanTwo)
+  }()
+
+  for {
+    nodeOne, chanOneOpen := <-chanOne
+    nodeTwo, chanTwoOpen := <-chanTwo
+
+    if !chanOneOpen && !chanTwoOpen {
+      return true // both channels closed, trees are same
+    }
+
+    if chanOneOpen != chanTwoOpen {
+      return false // different number of nodes
+    }
+
+    if nodeOne != nodeTwo {
+      return false // different values
+    }
+  }
+}
+
+func main() {
+  fmt.Println("Trees are equivalent:", Same(tree.New(1), tree.New(1)))
+}
+```
+
+## Web Crawler
+
+[https://go.dev/tour/concurrency/10](https://go.dev/tour/concurrency/10)
+
+```go
+package main
+
+import (
+  "fmt"
+  "sync"
+)
+
+type Fetcher interface {
+  Fetch(url string) (body string, urls []string, err error)
+}
+
+type Cache struct {
+  v  map[string]bool
+  mu sync.Mutex
+}
+
+func (cache *Cache) Set(key string, value bool) {
+  cache.mu.Lock()
+  cache.v[key] = value
+  cache.mu.Unlock()
+}
+
+func (cache *Cache) Get(key string) bool {
+  cache.mu.Lock()
+  defer cache.mu.Unlock()
+  return cache.v[key]
+}
+
+func Crawl(url string, depth int, fetcher Fetcher, visited *Cache, wg *sync.WaitGroup) {
+  if depth == 0 || visited.Get(url) {
+    wg.Done()
+    return
+  }
+  visited.Set(url, true)
+
+  body, urls, err := fetcher.Fetch(url)
+  if err != nil {
+    fmt.Println(err)
+    wg.Done()
+    return
+  }
+
+  fmt.Printf("found: %s %q\n", url, body)
+
+  for _, u := range urls {
+    wg.Add(1)
+    go Crawl(u, depth-1, fetcher, visited, wg)
+  }
+  wg.Done()
+}
+
+func main() {
+  visited := Cache{v: make(map[string]bool)}
+
+  var wg sync.WaitGroup
+  wg.Add(1)
+
+  Crawl("https://golang.org/", 4, fetcher, &visited, &wg)
+
+  wg.Wait()
+}
+
+type fakeFetcher map[string]*fakeResult
+
+type fakeResult struct {
+  body string
+  urls []string
+}
+
+func (f fakeFetcher) Fetch(url string) (body string, urls []string, err error) {
+  if res, ok := f[url]; ok {
+    return res.body, res.urls, nil
+  }
+
+  return "", []string{}, fmt.Errorf("not found %s", url)
+}
+
+var fetcher = fakeFetcher{
+  "https://golang.org/": &fakeResult{
+    "The Go Programming Language",
+    []string{
+      "https://golang.org/pkg/",
+      "https://golang.org/cmd/",
+    },
+  },
+  "https://golang.org/pkg/": &fakeResult{
+    "Packages",
+    []string{
+      "https://golang.org/",
+      "https://golang.org/cmd/",
+      "https://golang.org/pkg/fmt/",
+      "https://golang.org/pkg/os/",
+    },
+  },
+  "https://golang.org/pkg/fmt/": &fakeResult{
+    "Package fmt",
+    []string{
+      "https://golang.org/",
+      "https://golang.org/pkg/",
+    },
+  },
+  "https://golang.org/pkg/os/": &fakeResult{
+    "Package os",
+    []string{
+      "https://golang.org/",
+      "https://golang.org/pkg/",
+    },
+  },
+}
+```
